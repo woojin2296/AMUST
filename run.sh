@@ -6,7 +6,22 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Build first
 "$ROOT_DIR/build.sh"
 
-APP_BIN="$ROOT_DIR/build/amust.app/Contents/MacOS/amust"
+OS_NAME="$(uname -s)"
+case "$OS_NAME" in
+  Darwin) PLATFORM="macos" ;;
+  Linux) PLATFORM="linux" ;;
+  *) PLATFORM="$(echo "$OS_NAME" | tr '[:upper:]' '[:lower:]')" ;;
+esac
+
+BUILD_TYPE="${AMUST_BUILD_TYPE:-Release}"
+BUILD_DIR="$ROOT_DIR/build/${PLATFORM}-${BUILD_TYPE}"
+
+if [[ "$PLATFORM" == "macos" ]]; then
+  APP_BIN="$BUILD_DIR/amust.app/Contents/MacOS/amust"
+else
+  APP_BIN="$BUILD_DIR/amust"
+fi
+
 if [[ ! -x "$APP_BIN" ]]; then
   echo "error: built app not found at: $APP_BIN" >&2
   exit 1
@@ -33,4 +48,3 @@ fi
 
 echo "starting: $APP_BIN"
 exec "$APP_BIN"
-

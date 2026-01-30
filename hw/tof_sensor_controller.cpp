@@ -136,6 +136,8 @@ QString TofSensorController::resolveTofScriptPath() const {
   candidates << (dir + QDir::separator() + QStringLiteral("../TOF.py"));
   candidates << (dir + QDir::separator() + QStringLiteral("../../TOF.py"));
   candidates << (dir + QDir::separator() + QStringLiteral("../Resources/TOF.py"));
+  candidates << (dir + QDir::separator() + QStringLiteral("../share/amust/TOF.py"));
+  candidates << (dir + QDir::separator() + QStringLiteral("../../share/amust/TOF.py"));
   for (const QString &p : candidates) {
     if (QFileInfo::exists(p))
       return QFileInfo(p).canonicalFilePath();
@@ -157,4 +159,3 @@ void TofSensorController::attachProcessLogging(QProcess *process, const QString 
     qWarning() << label << "error" << error << process->errorString();
   });
 }
-

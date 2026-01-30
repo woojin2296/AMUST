@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.16)
 
 project(amust VERSION 0.2 LANGUAGES CXX)
 
+include(GNUInstallDirs)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -26,6 +28,14 @@ set(PROJECT_SOURCES
         hw/tof_sensor_controller.h
 )
 
+option(AMUST_BUNDLE "Build macOS .app bundle (Apple only)" ON)
+
+# Bundle additional runtime assets on macOS.
+if(APPLE AND AMUST_BUNDLE)
+    list(APPEND PROJECT_SOURCES TOF.py)
+    set_source_files_properties(TOF.py PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+endif()
+
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(amust
         MANUAL_FINALIZATION
@@ -49,9 +59,19 @@ else()
     message(WARNING "libgpiod not found; building without GPIO control")
 endif()
 
-set_target_properties(amust PROPERTIES
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
+if(APPLE AND AMUST_BUNDLE)
+    set_target_properties(amust PROPERTIES
+        MACOSX_BUNDLE TRUE
+    )
+endif()
+
+install(TARGETS amust
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    BUNDLE  DESTINATION .
+)
+
+install(PROGRAMS ${CMAKE_CURRENT_SOURCE_DIR}/TOF.py
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/amust
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)

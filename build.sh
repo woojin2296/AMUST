@@ -2,7 +2,16 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-BUILD_DIR="$ROOT_DIR/build"
+
+OS_NAME="$(uname -s)"
+case "$OS_NAME" in
+  Darwin) PLATFORM="macos" ;;
+  Linux) PLATFORM="linux" ;;
+  *) PLATFORM="$(echo "$OS_NAME" | tr '[:upper:]' '[:lower:]')" ;;
+esac
+
+BUILD_TYPE="${AMUST_BUILD_TYPE:-Release}"
+BUILD_DIR="$ROOT_DIR/build/${PLATFORM}-${BUILD_TYPE}"
 CACHE_FILE="$BUILD_DIR/CMakeCache.txt"
 
 # If this folder was copied from another machine/path, the CMake cache will
@@ -15,5 +24,5 @@ if [[ -f "$CACHE_FILE" ]]; then
   fi
 fi
 
-cmake -S "$ROOT_DIR" -B "$BUILD_DIR" -G Ninja -DCMAKE_BUILD_TYPE=Release
-cmake --build build --config Release
+cmake -S "$ROOT_DIR" -B "$BUILD_DIR" -G Ninja -DCMAKE_BUILD_TYPE="$BUILD_TYPE"
+cmake --build "$BUILD_DIR" --config "$BUILD_TYPE"
