@@ -1,0 +1,18 @@
+# ninja log v7
+11	517	1769747653621801000	amust_autogen/timestamp	aed65703e0c0499
+11	517	1769747653621801000	amust_autogen/mocs_compilation.cpp	aed65703e0c0499
+11	517	1769747653621801000	/Users/woojin-lim/Desktop/amust/AMUST v0.2.0/build/amust_autogen/timestamp	aed65703e0c0499
+11	517	1769747653621801000	/Users/woojin-lim/Desktop/amust/AMUST v0.2.0/build/amust_autogen/mocs_compilation.cpp	aed65703e0c0499
+518	2013	1769747653639444747	CMakeFiles/amust.dir/main.cpp.o	ca3f51cb269ecb75
+517	2126	1769747653638795329	CMakeFiles/amust.dir/amust_autogen/mocs_compilation.cpp.o	24076cae2f688cab
+582	1916	1769747405152157428	CMakeFiles/amust.dir/boot_screen_widget.cpp.o	1b449014ef004ffe
+2319	2447	1769747655440764694	amust.app/Contents/MacOS/amust	426b2c54b3e04c90
+518	2319	1769747653639745956	CMakeFiles/amust.dir/main_menu_widget.cpp.o	bd3315b0d0234b39
+582	1790	1769747405152502512	CMakeFiles/amust.dir/progress_pill.cpp.o	f1b1599b86742a84
+518	1801	1769747653640033289	CMakeFiles/amust.dir/gpio_controller.cpp.o	9975d5d0d92ba2eb
+709	865	1769747213780493337	CMakeFiles/amust.dir/hw/gpio_controller.cpp.o	d758e432a19ef138
+708	2339	1769747213779485211	CMakeFiles/amust.dir/app/main.cpp.o	ba51e02180e0024a
+709	2343	1769747213780223254	CMakeFiles/amust.dir/widgets/progress_pill.cpp.o	fb94166cc3817522
+708	2363	1769747213779768503	CMakeFiles/amust.dir/widgets/boot_screen_widget.cpp.o	7b713a12b40e3169
+709	2597	1769747213780059503	CMakeFiles/amust.dir/widgets/main_menu_widget.cpp.o	9568ed9c80792cf
+519	2249	1769747653640377748	CMakeFiles/amust.dir/hw/tof_sensor_controller.cpp.o	dfd774f862db2d6b

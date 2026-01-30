@@ -1,0 +1,5 @@
+/Users/woojin-lim/Desktop/amust/AMUST v0.2.0/build/CMakeFiles/amust.dir
+/Users/woojin-lim/Desktop/amust/AMUST v0.2.0/build/CMakeFiles/edit_cache.dir
+/Users/woojin-lim/Desktop/amust/AMUST v0.2.0/build/CMakeFiles/rebuild_cache.dir
+/Users/woojin-lim/Desktop/amust/AMUST v0.2.0/build/CMakeFiles/amust_autogen_timestamp_deps.dir
+/Users/woojin-lim/Desktop/amust/AMUST v0.2.0/build/CMakeFiles/amust_autogen.dir
