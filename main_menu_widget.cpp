@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include <cmath>
-#include <cstdlib>
 
 #include <QFrame>
 #include <QFontDatabase>
@@ -340,14 +339,6 @@ MainMenuWidget::MainMenuWidget(QWidget *parent) : QWidget(parent), tofSensor_(th
   });
   tickTimer_.start();
 
-  tofTimer_.setInterval(100);
-  connect(&tofTimer_, &QTimer::timeout, this, [this]() {
-    // Placeholder ToF simulation: slight drift around target.
-    const int drift = (std::rand() % 11) - 5; // -5..+5 mm
-    tofDistanceMm_ = std::clamp(tofDistanceMm_ + drift, AmustConfig::kTofSimMinMm,
-                                AmustConfig::kTofSimMaxMm);
-    updateToFUi();
-  });
   const bool enableTof =
       AmustConfig::kTofEnableByDefault || envTruthy(qgetenv("AMUST_ENABLE_TOF"));
   if (enableTof) {
@@ -360,7 +351,8 @@ MainMenuWidget::MainMenuWidget(QWidget *parent) : QWidget(parent), tofSensor_(th
         /*durationSeconds=*/0.0);
   }
   if (!usingRealTof_) {
-    tofTimer_.start();
+    tofDistanceMm_ = -1;
+    updateToFUi();
   }
 
   auto clampSetDuration = [this]() {
