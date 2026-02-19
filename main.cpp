@@ -7,6 +7,7 @@
 
 int main(int argc, char *argv[]) {
   QApplication app(argc, argv);
+  QApplication::setOverrideCursor(Qt::BlankCursor);
 
   QMainWindow window;
   window.setWindowTitle("AMUST v0.2.0");
