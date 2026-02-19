@@ -493,7 +493,7 @@ void MainMenuWidget::updateToFUi() {
   QString text;
 
   if (tofDistanceMm_ < 0) {
-    status = "TOF 센서가 잡히지 않음";
+    status = "TOF SENSOR NOT DETECTED";
     bg = "rgba(255, 70, 70, 0.26)";
     border = "rgba(255, 70, 70, 0.55)";
     text = "rgba(255, 190, 190, 0.98)";
