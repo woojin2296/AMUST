@@ -715,7 +715,7 @@ void MainMenuWidget::paintEvent(QPaintEvent *event) {
     p.setFont(fixedFont(11));
     p.setPen(withAlpha(Qt::white, 0.5));
     const QString footer = QString::fromUtf8(
-        u8"(주)유머스트알엔디 | Model AMUST-A001RPIW | HW Rev.C | FIRMWARE v1.0.0");
+        u8"UMUSTR&D | Model AMUST-A001RPIW | HW Rev.C | FIRMWARE v1.0.0");
     p.drawText(QRectF(contentBar.left(), footerTopY, contentBar.width(), 16),
                Qt::AlignHCenter, footer);
   }
