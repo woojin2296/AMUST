@@ -485,7 +485,11 @@ void MainMenuWidget::updateToFUi() {
   if (!tofValueLabel_ || !tofStatusLabel_ || !tofHintLabel_)
     return;
 
-  tofValueLabel_->setText(QString::number(tofDistanceMm_) + " mm");
+  if (tofDistanceMm_ < 0) {
+    tofValueLabel_->setText("-- mm");
+  } else {
+    tofValueLabel_->setText(QString::number(tofDistanceMm_) + " mm");
+  }
 
   // Target distance window (tune as needed).
   constexpr int kMin = AmustConfig::kTofMinMm;
@@ -496,20 +500,22 @@ void MainMenuWidget::updateToFUi() {
   QString border;
   QString text;
 
-  if (tofDistanceMm_ < kMin) {
-    tofOk_ = false;
+  if (tofDistanceMm_ < 0) {
+    status = "TOF 센서가 잡히지 않음";
+    bg = "rgba(255, 70, 70, 0.26)";
+    border = "rgba(255, 70, 70, 0.55)";
+    text = "rgba(255, 190, 190, 0.98)";
+  } else if (tofDistanceMm_ < kMin) {
     status = "TOO CLOSE";
     bg = "rgba(255, 70, 70, 0.26)";
     border = "rgba(255, 70, 70, 0.55)";
     text = "rgba(255, 190, 190, 0.98)";
   } else if (tofDistanceMm_ > kMax) {
-    tofOk_ = false;
     status = "TOO FAR";
     bg = "rgba(255, 180, 40, 0.26)";
     border = "rgba(255, 180, 40, 0.55)";
     text = "rgba(255, 225, 170, 0.98)";
   } else {
-    tofOk_ = true;
     status = "OK";
     bg = "rgba(70, 255, 180, 0.22)";
     border = "rgba(70, 255, 180, 0.50)";
@@ -576,7 +582,7 @@ void MainMenuWidget::updateControlsEnabled() {
   outputMinus1mButton_->setEnabled(canAdjust);
   outputPlus1mButton_->setEnabled(canAdjust);
 
-  startButton_->setEnabled(state_ == DeviceState::Ready && tofOk_);
+  startButton_->setEnabled(state_ == DeviceState::Ready);
   pauseButton_->setEnabled(state_ == DeviceState::Running || state_ == DeviceState::Paused);
   pauseButton_->setText(state_ == DeviceState::Paused ? "RESUME" : "PAUSE");
 

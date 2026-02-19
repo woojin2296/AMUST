@@ -45,8 +45,7 @@ private:
   bool usingRealTof_ = false;
 
   int progress_ = 0;
-  int tofDistanceMm_ = 420;
-  bool tofOk_ = true;
+  int tofDistanceMm_ = -1;
 
   DeviceState state_ = DeviceState::Ready;
   bool xrayActive_ = false;

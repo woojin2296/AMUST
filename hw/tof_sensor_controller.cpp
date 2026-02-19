@@ -46,10 +46,9 @@ bool TofSensorController::start(double intervalSeconds, std::function<void(int m
       const int mm = trimmed.toInt(&ok);
       if (!ok)
         continue;
-      if (mm <= 0)
-        continue;
+      const int normalizedMm = std::max(-1, mm);
       if (distanceCallback_)
-        distanceCallback_(mm);
+        distanceCallback_(normalizedMm);
     }
   });
 
