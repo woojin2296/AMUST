@@ -1,0 +1,19 @@
+[Unit]
+Description=AMUST Kiosk App
+After=graphical.target
+Wants=graphical.target
+
+[Service]
+Type=simple
+User=AMUST
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/AMUST/.Xauthority
+WorkingDirectory=/home/AMUST/AMUST
+ExecStart=/bin/bash /home/AMUST/AMUST/run-kiosk.sh
+Restart=always
+RestartSec=2
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=graphical.target
