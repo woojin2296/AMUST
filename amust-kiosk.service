@@ -1,7 +1,9 @@
 [Unit]
 Description=AMUST Kiosk App
 After=graphical.target
+After=display-manager.service
 Wants=graphical.target
+Wants=display-manager.service
 
 [Service]
 Type=simple
