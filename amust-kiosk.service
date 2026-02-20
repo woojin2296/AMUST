@@ -1,21 +1,23 @@
 [Unit]
-Description=AMUST Kiosk App
-After=graphical.target
-After=display-manager.service
-Wants=graphical.target
-Wants=display-manager.service
+Description=AMUST Kiosk App (EGLFS)
+After=systemd-udev-settle.service
+Wants=systemd-udev-settle.service
 
 [Service]
 Type=simple
 User=AMUST
-Environment=DISPLAY=:0
-Environment=XAUTHORITY=/home/AMUST/.Xauthority
+Environment=QT_QPA_PLATFORM=eglfs
+Environment=QT_QPA_EGLFS_ALWAYS_SET_MODE=1
 WorkingDirectory=/home/AMUST/AMUST
 ExecStart=/bin/bash /home/AMUST/AMUST/run-kiosk.sh
 Restart=always
 RestartSec=2
+StandardInput=tty
+TTYPath=/dev/tty1
+TTYReset=yes
+TTYVHangup=yes
 StandardOutput=journal
 StandardError=journal
 
 [Install]
-WantedBy=graphical.target
+WantedBy=multi-user.target
