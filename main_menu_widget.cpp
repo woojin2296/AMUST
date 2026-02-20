@@ -150,7 +150,7 @@ MainMenuWidget::MainMenuWidget(QWidget *parent) : QWidget(parent), tofSensor_(th
   tofStatusLabel_->setStyleSheet(pillStyle("rgba(255,255,255,0.10)", "rgba(255,255,255,0.12)") +
                                  monoStyle(12, true));
 
-  tofHintLabel_ = new QLabel("Maintain target distance (e.g. 350–450 mm)", tofCard);
+  tofHintLabel_ = new QLabel("Maintain target distance (e.g. 100–120 mm)", tofCard);
   tofHintLabel_->setMinimumHeight(28);
   tofHintLabel_->setStyleSheet(smallLabelStyle() + monoStyle(12, false) +
                                "QLabel { padding-left: 6px; }");
@@ -200,7 +200,7 @@ MainMenuWidget::MainMenuWidget(QWidget *parent) : QWidget(parent), tofSensor_(th
   led1ValueLabel_ = mkValue("OFF");
   ioLayout->addWidget(led1ValueLabel_, 2, 1);
 
-  ioLayout->addWidget(mkName("X-RAY"), 3, 0);
+  ioLayout->addWidget(mkName("ENERGY"), 3, 0);
   xrayValueLabel_ = mkValue("IDLE");
   ioLayout->addWidget(xrayValueLabel_, 3, 1);
 

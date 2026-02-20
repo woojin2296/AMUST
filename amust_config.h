@@ -3,8 +3,8 @@
 namespace AmustConfig {
 
 // ToF distance guidance window
-inline constexpr int kTofMinMm = 150;
-inline constexpr int kTofMaxMm = 200;
+inline constexpr int kTofMinMm = 100;
+inline constexpr int kTofMaxMm = 120;
 
 // ToF simulation clamp (placeholder until real sensor wired)
 inline constexpr int kTofSimMinMm = 100;
