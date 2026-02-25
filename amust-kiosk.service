@@ -2,15 +2,17 @@
 Description=AMUST Kiosk App
 StartLimitIntervalSec=0
 After=multi-user.target
-After=display-manager.service
+After=graphical.target
 Wants=multi-user.target
-Wants=display-manager.service
+Wants=graphical.target
 
 [Service]
 Type=simple
 User=@SERVICE_USER@
 Environment=DISPLAY=:0
+Environment=HOME=@SERVICE_USER_HOME@
 Environment=XAUTHORITY=@SERVICE_USER_HOME@/.Xauthority
+Environment=QT_QPA_PLATFORM=xcb
 WorkingDirectory=@ROOT_DIR@
 ExecStart=/bin/bash @ROOT_DIR@/run-kiosk.sh
 Restart=always
@@ -20,3 +22,4 @@ StandardError=journal
 
 [Install]
 WantedBy=multi-user.target
+WantedBy=graphical.target
