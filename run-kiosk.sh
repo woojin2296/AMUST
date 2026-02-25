@@ -20,7 +20,7 @@ if [[ ! -x "$APP_PATH" ]]; then
 fi
 
 if [[ ! -S "/tmp/.X11-unix/X${X_DISPLAY#:}" ]]; then
-  for _ in $(seq 1 20); do
+  for _ in $(seq 1 120); do
     [[ -S "/tmp/.X11-unix/X${X_DISPLAY#:}" ]] && break
     sleep 1
   done

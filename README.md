@@ -23,6 +23,24 @@ chmod +x build.sh run.sh
 ./run.sh
 ```
 
+## 키오스크 자동 시작 설치 (권장)
+
+```bash
+sudo ./install-kiosk-service.sh
+```
+
+재부팅 후 서비스 상태 확인:
+
+```bash
+systemctl status amust-kiosk
+```
+
+최근 부팅 로그 확인:
+
+```bash
+journalctl -u amust-kiosk -b
+```
+
 ## GPIO 접근이 필요한 경우(선택)
 
 ```bash
