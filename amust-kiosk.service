@@ -1,9 +1,9 @@
 [Unit]
 Description=AMUST Kiosk App
 StartLimitIntervalSec=0
-After=graphical.target
+After=multi-user.target
 After=display-manager.service
-Wants=graphical.target
+Wants=multi-user.target
 Wants=display-manager.service
 
 [Service]
@@ -19,4 +19,4 @@ StandardOutput=journal
 StandardError=journal
 
 [Install]
-WantedBy=graphical.target
+WantedBy=multi-user.target

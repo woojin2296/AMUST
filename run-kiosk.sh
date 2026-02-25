@@ -14,22 +14,19 @@ if [[ -z "${XAUTHORITY:-}" ]]; then
   export XAUTHORITY="$HOME/.Xauthority"
 fi
 
-if [[ ! -x "$APP_PATH" ]]; then
-  echo "error: executable not found: $APP_PATH" >&2
-  exit 126
+while [[ ! -x "$APP_PATH" ]]; do
+  echo "wait: executable not ready: $APP_PATH" >&2
+  sleep 3
+done
+
+if [[ -z "${XAUTHORITY:-}" ]]; then
+  export XAUTHORITY="$HOME/.Xauthority"
 fi
 
-if [[ ! -S "/tmp/.X11-unix/X${X_DISPLAY#:}" ]]; then
-  for _ in $(seq 1 120); do
-    [[ -S "/tmp/.X11-unix/X${X_DISPLAY#:}" ]] && break
-    sleep 1
-  done
-fi
-
-if [[ ! -S "/tmp/.X11-unix/X${X_DISPLAY#:}" ]]; then
-  echo "error: X socket not ready: /tmp/.X11-unix/X${X_DISPLAY#:}" >&2
-  exit 1
-fi
+while [[ ! -S "/tmp/.X11-unix/X${X_DISPLAY#:}" ]]; do
+  echo "wait: x11 socket not ready: /tmp/.X11-unix/X${X_DISPLAY#:}" >&2
+  sleep 1
+done
 
 # Run prebuilt Linux binary directly (use for boot/kiosk startup).
 exec "$APP_PATH"
