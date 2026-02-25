@@ -2,7 +2,9 @@
 
 #include "amust_config.h"
 
+#include <algorithm>
 #include <utility>
+#include <vector>
 
 #include <QDebug>
 
@@ -19,6 +21,7 @@ struct GpioController::Impl {
   gpiod_line *led1 = nullptr;
   gpiod_line *led2 = nullptr;
   gpiod_line *xray = nullptr;
+  std::vector<std::pair<int, gpiod_line *>> requestedLines;
 #endif
 
   void setLine(void *linePtr, bool on) {
@@ -46,6 +49,13 @@ GpioController::GpioController() : impl_(std::make_unique<Impl>()) {
   }
 
   auto requestOut = [&](int lineNum, gpiod_line **outLine) -> bool {
+    auto sameLineIt = std::find_if(impl_->requestedLines.begin(), impl_->requestedLines.end(),
+                                   [&](const auto &pair) { return pair.first == lineNum; });
+    if (sameLineIt != impl_->requestedLines.end()) {
+      *outLine = sameLineIt->second;
+      return true;
+    }
+
     gpiod_line *line = gpiod_chip_get_line(impl_->chip, lineNum);
     if (!line) {
       qWarning() << "GPIO: failed to get line" << lineNum;
@@ -55,6 +65,8 @@ GpioController::GpioController() : impl_(std::make_unique<Impl>()) {
       qWarning() << "GPIO: failed to request output line" << lineNum;
       return false;
     }
+
+    impl_->requestedLines.emplace_back(lineNum, line);
     *outLine = line;
     return true;
   };
@@ -87,10 +99,9 @@ GpioController::~GpioController() {
     if (line)
       gpiod_line_release(line);
   };
-  release(impl_->laser);
-  release(impl_->led1);
-  release(impl_->led2);
-  release(impl_->xray);
+  for (const auto &entry : impl_->requestedLines) {
+    release(entry.second);
+  }
 
   if (impl_->chip)
     gpiod_chip_close(impl_->chip);

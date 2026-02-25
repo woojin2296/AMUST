@@ -531,7 +531,6 @@ void MainMenuWidget::updateIndicators() {
   if (!laserValueLabel_ || !led1ValueLabel_ || !xrayValueLabel_)
     return;
 
-  // HW note: Laser / LEDs / X-RAY share the same power (cannot be controlled independently).
   const bool xrayOn = (state_ == DeviceState::Running && xrayActive_);
   const bool laserOn = xrayOn;
   const bool ledsOn = xrayOn;
@@ -562,6 +561,7 @@ void MainMenuWidget::updateIndicators() {
                 xrayOn ? "rgba(255,190,190,0.98)" : "rgba(255,255,255,0.55)") +
       monoStyle(12, true));
 
+  // During RUNNING, LED1, LED2, and Laser are tied to the same GPIO line (17).
   gpio_.setLaser(laserOn);
   gpio_.setLed1(ledsOn);
   gpio_.setLed2(ledsOn);

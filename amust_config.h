@@ -24,8 +24,8 @@ inline constexpr int kOutputMaxMs = 600'000;     // 10 minutes
 inline constexpr const char *kGpioChipName = "gpiochip0";
 // NOTE: Update these line numbers to match your wiring.
 inline constexpr int kGpioLed1Line = 17;
-inline constexpr int kGpioLed2Line = 27;
-inline constexpr int kGpioLaserLine = 22;
-inline constexpr int kGpioXrayEnableLine = 23;
+inline constexpr int kGpioLed2Line = 17;
+inline constexpr int kGpioLaserLine = 17;
+inline constexpr int kGpioXrayEnableLine = 27;
 
 } // namespace AmustConfig
