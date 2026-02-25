@@ -17,10 +17,10 @@ public:
   void setLed2(bool on);
   void setXrayEnable(bool on);
 
+  bool isInitialized() const;
   void setAllOff();
 
 private:
   struct Impl;
   std::unique_ptr<Impl> impl_;
 };
-

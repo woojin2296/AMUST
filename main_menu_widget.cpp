@@ -12,6 +12,7 @@
 #include <QSizePolicy>
 #include <QTime>
 #include <QVBoxLayout>
+#include <QDebug>
 
 #include "progress_pill.h"
 #include "amust_config.h"
@@ -398,6 +399,10 @@ MainMenuWidget::MainMenuWidget(QWidget *parent) : QWidget(parent), tofSensor_(th
   updateToFUi();
   updateIndicators();
   updateControlsEnabled();
+
+  if (!gpio_.isInitialized()) {
+    qWarning() << "GPIO: initialized=false (no output control active)";
+  }
 }
 
 QString MainMenuWidget::timeText() const {

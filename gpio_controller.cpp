@@ -11,7 +11,7 @@
 #endif
 
 struct GpioController::Impl {
-  bool ok = false;
+  bool initialized = false;
 
 #if defined(AMUST_HAVE_GPIOD)
   gpiod_chip *chip = nullptr;
@@ -24,7 +24,7 @@ struct GpioController::Impl {
   void setLine(void *linePtr, bool on) {
 #if defined(AMUST_HAVE_GPIOD)
     auto *line = static_cast<gpiod_line *>(linePtr);
-    if (!ok || !line)
+    if (!line)
       return;
     if (gpiod_line_set_value(line, on ? 1 : 0) < 0) {
       qWarning() << "gpiod_line_set_value failed";
@@ -59,15 +59,17 @@ GpioController::GpioController() : impl_(std::make_unique<Impl>()) {
     return true;
   };
 
-  const bool ok = requestOut(AmustConfig::kGpioLaserLine, &impl_->laser) &&
-                  requestOut(AmustConfig::kGpioLed1Line, &impl_->led1) &&
-                  requestOut(AmustConfig::kGpioLed2Line, &impl_->led2) &&
-                  requestOut(AmustConfig::kGpioXrayEnableLine, &impl_->xray);
+  const bool hasLaser = requestOut(AmustConfig::kGpioLaserLine, &impl_->laser);
+  const bool hasLed1 = requestOut(AmustConfig::kGpioLed1Line, &impl_->led1);
+  const bool hasLed2 = requestOut(AmustConfig::kGpioLed2Line, &impl_->led2);
+  const bool hasXray = requestOut(AmustConfig::kGpioXrayEnableLine, &impl_->xray);
 
-  impl_->ok = ok;
-  if (!impl_->ok) {
-    qWarning() << "GPIO: init failed; outputs disabled";
-    setAllOff();
+  impl_->initialized = hasLaser || hasLed1 || hasLed2 || hasXray;
+  if (!impl_->initialized) {
+    qWarning() << "GPIO: init failed; no output lines available";
+  } else {
+    qInfo() << "GPIO: init" << (hasLaser ? "laser" : "no-laser") << (hasLed1 ? "led1" : "no-led1")
+            << (hasLed2 ? "led2" : "no-led2") << (hasXray ? "xray" : "no-xray");
   }
 #else
   qInfo() << "GPIO: libgpiod not enabled; outputs are no-op";
@@ -146,3 +148,12 @@ void GpioController::setAllOff() {
 #endif
 }
 
+bool GpioController::isInitialized() const {
+  if (!impl_)
+    return false;
+#if defined(AMUST_HAVE_GPIOD)
+  return impl_->initialized;
+#else
+  return false;
+#endif
+}
