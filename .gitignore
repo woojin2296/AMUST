@@ -1,5 +1,22 @@
 # Build outputs
 build/
+cmake-build-*/
+compile_commands.json
+
+# In-source / legacy CMake artifacts
+/CMakeCache.txt
+/CMakeFiles/
+/CTestTestfile.cmake
+/cmake_install.cmake
+/build.ninja
+/.ninja_deps
+/.ninja_log
+
+# Build artifacts
+amust
+*.app
+*.o
+*.obj
 
 # OS/editor junk
 .DS_Store
@@ -8,4 +25,3 @@ build/
 
 # CMake user presets
 CMakeUserPresets.json
-
